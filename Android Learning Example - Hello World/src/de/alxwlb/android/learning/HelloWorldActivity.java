@@ -11,14 +11,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class HelloWorldActivity extends Activity {
+    
+    EditText editText1;
+    Button btnOk;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        final EditText editText1 = (EditText)findViewById(R.id.editText1);
-        final Button btnOk = (Button)findViewById(R.id.button1);
+        editText1 = (EditText)findViewById(R.id.editText1);
+        btnOk = (Button)findViewById(R.id.button1);
         
         btnOk.setOnClickListener(new View.OnClickListener() {
 			
@@ -26,7 +30,20 @@ public class HelloWorldActivity extends Activity {
 				// TODO Auto-generated method stub
 				if ("" == editText1.getText().toString()) return;
 				String sText = "Hello " + editText1.getText().toString().trim() + "!";
+				Intent myIntent = new Intent(HelloWorldActivity.this, HelloWorldGreetings.class);
+				myIntent.putExtra("myName", sText);
+				startActivity(myIntent);
 			}
 		});
     }
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		editText1.setText("");
+	}
 }
